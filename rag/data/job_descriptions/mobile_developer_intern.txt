@@ -1,0 +1,15 @@
+Title: Mobile Developer Intern
+
+Description:
+We are looking for a Mobile Developer Intern to build mobile applications.
+
+Responsibilities:
+- Develop mobile apps
+- Work with UI/UX teams
+- Test and debug applications
+
+Required Skills:
+Java/Kotlin or Swift, Mobile Development, UI Design
+
+Nice to Have:
+Flutter, React Native

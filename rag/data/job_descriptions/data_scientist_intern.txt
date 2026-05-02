@@ -1,0 +1,15 @@
+Title: Data Scientist Intern
+
+Description:
+We are seeking a Data Scientist Intern to analyze data and build predictive models.
+
+Responsibilities:
+- Analyze datasets
+- Build machine learning models
+- Communicate insights
+
+Required Skills:
+Python, Statistics, Machine Learning, Pandas
+
+Nice to Have:
+Deep Learning, NLP, TensorFlow
