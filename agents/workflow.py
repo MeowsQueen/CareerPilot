@@ -2,6 +2,8 @@ from typing import TypedDict, List, Dict, Any
 
 from langgraph.graph import StateGraph, START, END
 
+from rag.retriever import retrieve_documents
+
 
 class CareerPilotState(TypedDict):
     user_query: str
@@ -43,16 +45,21 @@ def cv_analyzer_node(state: CareerPilotState) -> CareerPilotState:
 
 
 def rag_retriever_node(state: CareerPilotState) -> CareerPilotState:
-    state["retrieved_jobs"] = [
-        {
-            "title": "Data Analyst Intern",
-            "required_skills": ["Python", "SQL", "Excel", "Power BI"]
-        },
-        {
-            "title": "Machine Learning Intern",
-            "required_skills": ["Python", "Machine Learning", "Pandas", "Scikit-learn"]
-        }
-    ]
+    query = f"""
+    CV:
+    {state["cv_text"]}
+
+    Target Role:
+    {state["target_role"]}
+    """
+
+    retrieved = retrieve_documents(query, top_k=5)
+
+    # sadece job_descriptions filtrele (şimdilik)
+    jobs = [doc for doc in retrieved if doc["category"] == "job_descriptions"]
+
+    state["retrieved_jobs"] = jobs
+
     return state
 
 
