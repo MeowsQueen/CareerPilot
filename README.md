@@ -73,3 +73,63 @@ career-pilot/
 ├── .env.example
 └── .gitignore
 ```
+
+## RAG Setup and Usage
+
+The RAG module uses ChromaDB as a local vector database and SentenceTransformers for embeddings.
+
+### 1. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Ingest knowledge base documents
+
+Before running the system, build the local vector database:
+
+```bash
+python -m rag.ingest
+```
+
+This reads documents from:
+
+```text
+rag/data/job_descriptions/
+rag/data/cv_guidelines/
+rag/data/skill_roadmaps/
+```
+
+and stores embeddings in:
+
+```text
+rag/vector_store/
+```
+
+### 3. Run the system
+
+```bash
+python main.py
+```
+
+### 4. Run RAG tests
+
+```bash
+pytest tests/test_rag.py
+```
+
+Expected result:
+
+```text
+2 passed
+```
+
+### Note
+
+`rag/vector_store/` is ignored by Git. Each developer should generate it locally by running:
+
+```bash
+python -m rag.ingest
+```
+
+ChromaDB distance scores are used for retrieval ranking. Lower distance means higher relevance.
