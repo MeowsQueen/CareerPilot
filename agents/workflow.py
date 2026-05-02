@@ -53,11 +53,13 @@ def rag_retriever_node(state: CareerPilotState) -> CareerPilotState:
     {state["target_role"]}
     """
 
-    retrieved = retrieve_documents(query, top_k=5)
-    jobs = [doc for doc in retrieved if doc["category"] == "job_descriptions"]
+    jobs = retrieve_documents(
+        query=query,
+        top_k=3,
+        category="job_descriptions"
+    )
 
     state["retrieved_jobs"] = jobs
-
 
     return state
 
