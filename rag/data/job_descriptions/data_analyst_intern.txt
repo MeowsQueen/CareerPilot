@@ -1,0 +1,16 @@
+Title: Data Analyst Intern
+
+Description:
+We are looking for a Data Analyst Intern to support data-driven decision making. The candidate will work with datasets, perform data cleaning, and create reports and dashboards.
+
+Responsibilities:
+- Analyze structured datasets
+- Clean and preprocess data
+- Create dashboards and reports
+- Communicate insights to stakeholders
+
+Required Skills:
+Python, SQL, Excel, Data Visualization
+
+Nice to Have:
+Power BI, Tableau, Pandas, Statistics
