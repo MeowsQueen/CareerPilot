@@ -73,6 +73,7 @@ career-pilot/
 │
 ├── main.py
 ├── requirements.txt
+├── requirements-dev.txt
 ├── README.md
 ├── .env.example
 └── .gitignore
