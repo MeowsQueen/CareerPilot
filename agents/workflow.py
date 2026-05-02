@@ -54,22 +54,42 @@ def rag_retriever_node(state: CareerPilotState) -> CareerPilotState:
     """
 
     retrieved = retrieve_documents(query, top_k=5)
-
-    # sadece job_descriptions filtrele (şimdilik)
     jobs = [doc for doc in retrieved if doc["category"] == "job_descriptions"]
 
     state["retrieved_jobs"] = jobs
 
+    print("RETRIEVED DOCS:", state["retrieved_jobs"])
+
     return state
 
 
+def extract_title(content: str) -> str:
+    for line in content.splitlines():
+        if line.lower().startswith("title:"):
+            return line.replace("Title:", "").strip()
+    return "Unknown Role"
+
+
 def job_matcher_node(state: CareerPilotState) -> CareerPilotState:
-    state["job_matches"] = [
-        {
-            "title": "Data Analyst Intern",
-            "match_reason": "The CV includes Python and SQL, which are core requirements."
-        }
-    ]
+    retrieved_jobs = state.get("retrieved_jobs", [])
+
+    job_matches = []
+
+    for job in retrieved_jobs:
+        title = extract_title(job["content"])
+
+        job_matches.append({
+            "title": title,
+            "match_reason": (
+                f"This role was retrieved from the RAG knowledge base "
+                f"based on the user's CV and target role: {state['target_role']}."
+            ),
+            "retrieval_score": job["score"],
+            "source": job["id"]
+        })
+
+    state["job_matches"] = job_matches
+
     return state
 
 
