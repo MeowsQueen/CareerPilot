@@ -1,0 +1,18 @@
+Role: Mobile Developer
+
+Core Skills:
+- Mobile programming
+- UI/UX
+
+Tools:
+- Android Studio / Xcode
+
+Learning Path:
+1. Learn mobile language (Kotlin/Swift)
+2. Build simple apps
+3. Learn UI design
+4. Work with APIs
+5. Publish apps
+
+Advanced Topics:
+- Cross-platform frameworks

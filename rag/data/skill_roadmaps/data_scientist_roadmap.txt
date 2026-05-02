@@ -1,0 +1,22 @@
+Role: Data Scientist
+
+Core Skills:
+- Python
+- Statistics
+- Machine Learning
+
+Tools:
+- Pandas
+- Scikit-learn
+- Jupyter
+
+Learning Path:
+1. Learn Python and data analysis
+2. Study statistics fundamentals
+3. Learn machine learning models
+4. Practice on datasets
+5. Build projects
+
+Advanced Topics:
+- Deep Learning
+- NLP
