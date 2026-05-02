@@ -26,6 +26,9 @@ career-pilot/
 │   │   └── skill_roadmaps/
 │   └── vector_store/
 │
+├── scripts/
+│   └── demo_cases.py
+│
 ├── monitoring/
 │   ├── __init__.py
 │   ├── safety_rules.py
@@ -59,6 +62,7 @@ career-pilot/
 │
 ├── docs/
 │   ├── report/
+│   │   └── rag_section.md
 │   ├── screenshots/
 │   └── demo_notes.md
 │
@@ -113,7 +117,12 @@ rag/vector_store/
 python main.py
 ```
 
-### 4. Run RAG tests
+### 4. Run demo cases
+```bash
+python scripts/demo_cases.py
+```
+
+### 5. Run RAG tests
 
 ```bash
 pytest tests/test_rag.py
