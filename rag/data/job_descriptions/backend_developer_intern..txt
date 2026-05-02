@@ -1,0 +1,16 @@
+Title: Backend Developer Intern
+
+Description:
+We are looking for a Backend Developer Intern to help build scalable server-side applications and APIs.
+
+Responsibilities:
+- Develop RESTful APIs
+- Work with databases
+- Optimize backend performance
+- Collaborate with frontend developers
+
+Required Skills:
+Python or Java, SQL, REST APIs, Git
+
+Nice to Have:
+Django, Flask, Node.js, Docker

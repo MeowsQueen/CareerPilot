@@ -1,0 +1,22 @@
+Role: Frontend Developer
+
+Core Skills:
+- HTML
+- CSS
+- JavaScript
+
+Tools:
+- React
+- Git
+
+Learning Path:
+1. Learn HTML & CSS fundamentals
+2. Learn JavaScript deeply
+3. Build interactive web pages
+4. Learn React framework
+5. Build portfolio projects
+
+Advanced Topics:
+- TypeScript
+- Next.js
+- UI/UX principles

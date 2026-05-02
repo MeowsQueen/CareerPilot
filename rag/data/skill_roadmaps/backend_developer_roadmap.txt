@@ -1,0 +1,22 @@
+Role: Backend Developer
+
+Core Skills:
+- Python or Java
+- Databases (SQL)
+- API Development
+
+Tools:
+- Django / Flask / Node.js
+- PostgreSQL / MySQL
+
+Learning Path:
+1. Learn a backend language
+2. Understand REST APIs
+3. Work with databases
+4. Build CRUD applications
+5. Learn authentication systems
+
+Advanced Topics:
+- Docker
+- Microservices
+- System Design

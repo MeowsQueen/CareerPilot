@@ -2,6 +2,8 @@ from typing import TypedDict, List, Dict, Any
 
 from langgraph.graph import StateGraph, START, END
 
+from rag.retriever import retrieve_documents
+
 
 class CareerPilotState(TypedDict):
     user_query: str
@@ -43,39 +45,127 @@ def cv_analyzer_node(state: CareerPilotState) -> CareerPilotState:
 
 
 def rag_retriever_node(state: CareerPilotState) -> CareerPilotState:
-    state["retrieved_jobs"] = [
-        {
-            "title": "Data Analyst Intern",
-            "required_skills": ["Python", "SQL", "Excel", "Power BI"]
-        },
-        {
-            "title": "Machine Learning Intern",
-            "required_skills": ["Python", "Machine Learning", "Pandas", "Scikit-learn"]
-        }
-    ]
+    query = f"""
+    CV:
+    {state["cv_text"]}
+
+    Target Role:
+    {state["target_role"]}
+    """
+
+    retrieved = retrieve_documents(query, top_k=5)
+    jobs = [doc for doc in retrieved if doc["category"] == "job_descriptions"]
+
+    state["retrieved_jobs"] = jobs
+
+
     return state
+
+
+def extract_title(content: str) -> str:
+    for line in content.splitlines():
+        if line.lower().startswith("title:"):
+            return line.replace("Title:", "").strip()
+    return "Unknown Role"
 
 
 def job_matcher_node(state: CareerPilotState) -> CareerPilotState:
-    state["job_matches"] = [
-        {
-            "title": "Data Analyst Intern",
-            "match_reason": "The CV includes Python and SQL, which are core requirements."
-        }
-    ]
+    retrieved_jobs = state.get("retrieved_jobs", [])
+
+    job_matches = []
+
+    for job in retrieved_jobs:
+        title = extract_title(job["content"])
+
+        job_matches.append({
+            "title": title,
+            "match_reason": (
+                f"This role was retrieved from the RAG knowledge base "
+                f"based on the user's CV and target role: {state['target_role']}."
+            ),
+            "retrieval_score": job["score"],
+            "source": job["id"]
+        })
+
+    state["job_matches"] = job_matches
+
     return state
+
+def extract_required_skills(content: str) -> list[str]:
+    lines = content.splitlines()
+    skills = []
+
+    for i, line in enumerate(lines):
+        if line.lower().startswith("required skills:"):
+            if ":" in line and line.split(":", 1)[1].strip():
+                skills_text = line.split(":", 1)[1]
+            elif i + 1 < len(lines):
+                skills_text = lines[i + 1]
+            else:
+                skills_text = ""
+
+            skills = [skill.strip() for skill in skills_text.split(",") if skill.strip()]
+            break
+
+    return skills
 
 
 def skill_gap_node(state: CareerPilotState) -> CareerPilotState:
-    state["skill_gaps"] = ["Power BI", "Advanced Excel"]
+    cv_skills = state.get("cv_profile", {}).get("skills", [])
+    cv_skills_lower = [skill.lower() for skill in cv_skills]
+
+    job_matches = state.get("job_matches", [])
+    retrieved_jobs = state.get("retrieved_jobs", [])
+
+    if not job_matches or not retrieved_jobs:
+        state["skill_gaps"] = []
+        return state
+
+    best_match_source = job_matches[0]["source"]
+
+    best_job = next(
+        (job for job in retrieved_jobs if job["id"] == best_match_source),
+        retrieved_jobs[0]
+    )
+
+    required_skills = extract_required_skills(best_job["content"])
+
+    missing_skills = [
+        skill for skill in required_skills
+        if skill.lower() not in cv_skills_lower
+    ]
+
+    state["skill_gaps"] = missing_skills
+
     return state
 
 
 def interview_coach_node(state: CareerPilotState) -> CareerPilotState:
-    state["interview_questions"] = [
-        "Can you explain a data analysis project you worked on?",
-        "How would you clean a dataset with missing values?"
-    ]
+    job_matches = state.get("job_matches", [])
+    skill_gaps = state.get("skill_gaps", [])
+    cv_skills = state.get("cv_profile", {}).get("skills", [])
+
+    if not job_matches:
+        state["interview_questions"] = []
+        return state
+
+    job_title = job_matches[0]["title"]
+
+    questions = []
+
+    # Role-based questions
+    questions.append(f"What experience do you have related to the role of {job_title}?")
+    questions.append(f"Can you explain a project where you used {', '.join(cv_skills[:2])}?")
+
+    # Skill gap questions
+    for skill in skill_gaps[:2]:
+        questions.append(f"How would you approach learning or improving your skills in {skill}?")
+
+    # Problem-solving
+    questions.append("How would you approach solving a real-world problem in this role?")
+
+    state["interview_questions"] = questions
+
     return state
 
 
@@ -85,26 +175,44 @@ def safety_monitor_node(state: CareerPilotState) -> CareerPilotState:
         "issues": []
     }
 
+    recommended_job = (
+        state["job_matches"][0]["title"]
+        if state.get("job_matches")
+        else "No suitable job found."
+    )
+
+    skill_gaps_text = (
+        ", ".join(state["skill_gaps"])
+        if state.get("skill_gaps")
+        else "No major skill gaps found."
+    )
+
+    questions_text = (
+        "\n".join(
+            [f"{i + 1}. {question}" for i, question in enumerate(state.get("interview_questions", []))]
+        )
+        if state.get("interview_questions")
+        else "No interview questions generated."
+    )
+
     state["final_response"] = f"""
 CareerPilot Analysis
 
 Target Role: {state["target_role"]}
 
 Recommended Job:
-{state["job_matches"][0]["title"]}
+{recommended_job}
 
 Skill Gaps:
-{", ".join(state["skill_gaps"])}
+{skill_gaps_text}
 
 Interview Questions:
-1. {state["interview_questions"][0]}
-2. {state["interview_questions"][1]}
+{questions_text}
 
 Safety Status:
 {state["safety_report"]["status"]}
 """
     return state
-
 
 def build_graph():
     graph = StateGraph(CareerPilotState)

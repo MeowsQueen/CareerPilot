@@ -1,0 +1,16 @@
+Title: Machine Learning Intern
+
+Description:
+We are seeking a Machine Learning Intern to assist in building and evaluating ML models. The candidate will work on real-world datasets and contribute to AI-based solutions.
+
+Responsibilities:
+- Train and evaluate machine learning models
+- Perform data preprocessing and feature engineering
+- Work with large datasets
+- Collaborate with engineering teams
+
+Required Skills:
+Python, Machine Learning, NumPy, Pandas, Scikit-learn
+
+Nice to Have:
+Deep Learning, TensorFlow, PyTorch, NLP

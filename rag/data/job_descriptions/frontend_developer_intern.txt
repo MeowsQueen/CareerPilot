@@ -1,0 +1,16 @@
+Title: Frontend Developer Intern
+
+Description:
+We are hiring a Frontend Developer Intern to build responsive and user-friendly web interfaces.
+
+Responsibilities:
+- Develop UI components
+- Work with modern frontend frameworks
+- Ensure responsive design
+- Collaborate with backend teams
+
+Required Skills:
+HTML, CSS, JavaScript, React
+
+Nice to Have:
+TypeScript, Next.js, UI/UX design, Figma
