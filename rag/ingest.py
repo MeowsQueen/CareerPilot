@@ -1,6 +1,8 @@
 import os
 import chromadb
-from sentence_transformers import SentenceTransformer
+
+from rag.embeddings import embed_text
+from rag.chunking import chunk_text
 
 
 BASE_DATA_DIR = "rag/data"
@@ -39,8 +41,6 @@ def load_documents():
 
 
 def ingest_documents():
-    model = SentenceTransformer("all-MiniLM-L6-v2")
-
     client = chromadb.PersistentClient(path=DB_DIR)
 
     collection = client.get_or_create_collection(
@@ -53,20 +53,31 @@ def ingest_documents():
         print("No documents found in rag/data.")
         return
 
+    total_chunks = 0
+
     for doc in documents:
-        embedding = model.encode(doc["text"]).tolist()
+        chunks = chunk_text(doc["text"])
 
-        collection.upsert(
-            ids=[doc["id"]],
-            documents=[doc["text"]],
-            embeddings=[embedding],
-            metadatas=[{
-                "source": doc["source"],
-                "category": doc["category"]
-            }]
-        )
+        for index, chunk in enumerate(chunks):
+            chunk_id = f"{doc['id']}_chunk_{index}"
+            embedding = embed_text(chunk)
 
-    print(f"{len(documents)} documents ingested into ChromaDB.")
+            collection.upsert(
+                ids=[chunk_id],
+                documents=[chunk],
+                embeddings=[embedding],
+                metadatas=[{
+                    "source": doc["source"],
+                    "category": doc["category"],
+                    "parent_id": doc["id"],
+                    "chunk_index": index
+                }]
+            )
+
+            total_chunks += 1
+
+    print(f"{len(documents)} documents loaded.")
+    print(f"{total_chunks} chunks ingested into ChromaDB.")
     print(f"Database path: {DB_DIR}")
     print(f"Collection name: {COLLECTION_NAME}")
 
