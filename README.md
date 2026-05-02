@@ -82,6 +82,7 @@ The RAG module uses ChromaDB as a local vector database and SentenceTransformers
 
 ```bash
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
 
 ### 2. Ingest knowledge base documents
