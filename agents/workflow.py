@@ -46,11 +46,14 @@ def cv_analyzer_node(state: CareerPilotState) -> CareerPilotState:
 
 def rag_retriever_node(state: CareerPilotState) -> CareerPilotState:
     query = f"""
-    CV:
-    {state["cv_text"]}
+    Target Role:
+    {state["target_role"]}
 
     Target Role:
     {state["target_role"]}
+
+    CV:
+    {state["cv_text"]}
     """
 
     jobs = retrieve_documents(
