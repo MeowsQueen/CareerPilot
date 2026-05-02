@@ -1,0 +1,27 @@
+Title: Technical CV Examples for Junior Candidates
+
+Purpose:
+This document gives examples of strong technical CV bullet points for students and junior candidates.
+
+Project Bullet Examples:
+- Developed a movie recommendation system using Python, Pandas, and Scikit-learn.
+- Built a responsive portfolio website using HTML, CSS, JavaScript, and React.
+- Designed a REST API for a task management application using Flask and PostgreSQL.
+- Analyzed sales data using SQL and created dashboards in Power BI.
+- Trained and evaluated a machine learning model for classification using Scikit-learn.
+
+Experience Bullet Examples:
+- Collaborated with a team of 4 students to build a web-based application.
+- Implemented authentication and database operations for a backend project.
+- Cleaned and visualized datasets to identify trends and patterns.
+- Used Git and GitHub for version control during software development.
+
+Weak Bullet Examples:
+- I know Python.
+- I made a website.
+- I worked on a project.
+
+Improved Versions:
+- Developed data analysis scripts in Python to clean and summarize CSV datasets.
+- Built a responsive website using React and reusable UI components.
+- Created a backend API with database integration for a student project.
