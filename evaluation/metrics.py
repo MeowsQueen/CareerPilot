@@ -35,11 +35,12 @@ def interview_question_relevance(questions, target_role):
 
 def response_completeness(output):
     required_fields = [
-        "cv_analysis",
+        "cv_profile",
         "job_matches",
         "skill_gaps",
         "interview_questions",
-        "final_output"
+        "final_response",
+        "safety_report"
     ]
 
     completed = 0
@@ -48,3 +49,4 @@ def response_completeness(output):
             completed += 1
 
     return round(completed / len(required_fields), 2)
+   
