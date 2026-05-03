@@ -556,7 +556,13 @@ Try selecting a different target role or improving your CV with more relevant sk
                 </div>
                 """, unsafe_allow_html=True)
             else:
-                st.info("No major skill gaps were detected.")
+                st.success("✔ No major skill gaps were detected.")
+                st.markdown("""
+<div class="step-box">
+<b>Suggestion:</b><br>
+Your current profile appears aligned with the selected target role. You can still improve your CV by adding more projects, tools, or measurable achievements.
+</div>
+""", unsafe_allow_html=True)
 
             st.markdown('</div>', unsafe_allow_html=True)
 
@@ -573,7 +579,13 @@ Try selecting a different target role or improving your CV with more relevant sk
                     </div>
                     """, unsafe_allow_html=True)
             else:
-                st.info("No interview questions were generated.")
+                st.warning("⚠ No interview questions were generated.")
+                st.markdown("""
+<div class="step-box">
+<b>Suggestion:</b><br>
+Try selecting a target role with stronger job matches or adding more detailed skills and project experience to your CV.
+</div>
+""", unsafe_allow_html=True)
 
             st.markdown('</div>', unsafe_allow_html=True)
 
