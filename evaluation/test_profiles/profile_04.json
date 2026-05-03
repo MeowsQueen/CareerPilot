@@ -1,0 +1,15 @@
+{
+  "profile_id": "profile_04",
+  "student_background": "Computer Engineering student with Java, Spring Boot, SQL, and REST API development experience. Completed a backend-focused course project.",
+  "target_role": "Backend Developer Intern",
+  "expected_jobs": [
+    "Backend Developer Intern",
+    "Software Engineer Intern",
+    "Junior Backend Developer"
+  ],
+  "expected_skill_gaps": [
+    "Docker",
+    "Authentication",
+    "Cloud Deployment"
+  ]
+}

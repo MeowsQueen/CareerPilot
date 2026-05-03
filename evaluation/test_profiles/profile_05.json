@@ -1,0 +1,15 @@
+{
+  "profile_id": "profile_05",
+  "student_background": "Computer Engineering student interested in cybersecurity with basic networking, Linux, and Python scripting knowledge.",
+  "target_role": "Cybersecurity Intern",
+  "expected_jobs": [
+    "Cybersecurity Intern",
+    "SOC Analyst Intern",
+    "Junior Security Analyst"
+  ],
+  "expected_skill_gaps": [
+    "SIEM Tools",
+    "Threat Analysis",
+    "Incident Response"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "profile_id": "profile_01",
+  "student_background": "Computer Engineering student with Python, SQL, and basic machine learning experience. Completed one data analysis internship.",
+  "target_role": "Data Analyst Intern",
+  "expected_jobs": [
+    "Data Analyst Intern",
+    "Business Intelligence Intern",
+    "Junior Data Analyst"
+  ],
+  "expected_skill_gaps": [
+    "Excel",
+    "Data Visualization",
+    "Power BI"
+  ]
+}
