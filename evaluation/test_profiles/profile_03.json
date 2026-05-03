@@ -1,0 +1,15 @@
+{
+  "profile_id": "profile_03",
+  "student_background": "Computer Engineering student with HTML, CSS, JavaScript, and React experience. Built several responsive web interface projects.",
+  "target_role": "Frontend Developer Intern",
+  "expected_jobs": [
+    "Frontend Developer Intern",
+    "Web Developer Intern",
+    "Junior Frontend Developer"
+  ],
+  "expected_skill_gaps": [
+    "TypeScript",
+    "Testing",
+    "UI/UX Principles"
+  ]
+}
