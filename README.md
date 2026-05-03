@@ -63,6 +63,7 @@ career-pilot/
 ├── docs/
 │   ├── report/
 │   │   └── rag_section.md
+│   │   └── safety_section.md
 │   ├── screenshots/
 │   └── demo_notes.md
 │

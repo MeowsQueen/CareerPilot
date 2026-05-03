@@ -4,6 +4,7 @@ from langgraph.graph import StateGraph, START, END
 
 from rag.retriever import retrieve_documents
 
+from agents.safety import safety_monitor_node
 
 class CareerPilotState(TypedDict):
     user_query: str
@@ -173,51 +174,6 @@ def interview_coach_node(state: CareerPilotState) -> CareerPilotState:
 
     return state
 
-
-def safety_monitor_node(state: CareerPilotState) -> CareerPilotState:
-    state["safety_report"] = {
-        "status": "safe",
-        "issues": []
-    }
-
-    recommended_job = (
-        state["job_matches"][0]["title"]
-        if state.get("job_matches")
-        else "No suitable job found."
-    )
-
-    skill_gaps_text = (
-        ", ".join(state["skill_gaps"])
-        if state.get("skill_gaps")
-        else "No major skill gaps found."
-    )
-
-    questions_text = (
-        "\n".join(
-            [f"{i + 1}. {question}" for i, question in enumerate(state.get("interview_questions", []))]
-        )
-        if state.get("interview_questions")
-        else "No interview questions generated."
-    )
-
-    state["final_response"] = f"""
-CareerPilot Analysis
-
-Target Role: {state["target_role"]}
-
-Recommended Job:
-{recommended_job}
-
-Skill Gaps:
-{skill_gaps_text}
-
-Interview Questions:
-{questions_text}
-
-Safety Status:
-{state["safety_report"]["status"]}
-"""
-    return state
 
 def build_graph():
     graph = StateGraph(CareerPilotState)

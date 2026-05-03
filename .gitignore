@@ -8,3 +8,5 @@ __pycache__/
 
 .DS_Store
 rag/vector_store/
+
+monitoring/*.txt
