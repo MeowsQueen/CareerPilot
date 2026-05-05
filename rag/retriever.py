@@ -11,7 +11,7 @@ COLLECTION_NAME = "career_knowledge"
 
 
 client = chromadb.PersistentClient(path=str(DB_DIR))
-collection = client.get_or_create_collection(name=COLLECTION_NAME)
+collection = client.get_collection(name=COLLECTION_NAME)
 
 
 
