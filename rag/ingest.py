@@ -43,7 +43,7 @@ def load_documents():
 
 
 def ingest_documents():
-    client = chromadb.PersistentClient(path=DB_DIR)
+    client = chromadb.PersistentClient(path=str(DB_DIR))
 
     collection = client.get_or_create_collection(
         name=COLLECTION_NAME
