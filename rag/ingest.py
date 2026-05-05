@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 import chromadb
 
@@ -16,27 +15,26 @@ COLLECTION_NAME = "career_knowledge"
 def load_documents():
     documents = []
 
-    for category in os.listdir(BASE_DATA_DIR):
-        category_path = os.path.join(BASE_DATA_DIR, category)
+    if not BASE_DATA_DIR.exists():
+        print(f"Data directory not found: {BASE_DATA_DIR}")
+        return documents
 
-        if not os.path.isdir(category_path):
+    for category_path in BASE_DATA_DIR.iterdir():
+        if not category_path.is_dir():
             continue
 
-        for filename in os.listdir(category_path):
-            if not filename.endswith(".txt"):
-                continue
+        category = category_path.name
 
-            file_path = os.path.join(category_path, filename)
-
+        for file_path in category_path.glob("*.txt"):
             with open(file_path, "r", encoding="utf-8") as file:
                 text = file.read()
 
-            doc_id = f"{category}_{filename.replace('.txt', '')}"
+            doc_id = f"{category}_{file_path.stem}"
 
             documents.append({
                 "id": doc_id,
                 "text": text,
-                "source": filename,
+                "source": file_path.name,
                 "category": category
             })
 
@@ -53,7 +51,7 @@ def ingest_documents():
     documents = load_documents()
 
     if not documents:
-        print("No documents found in rag/data.")
+        print(f"No documents found in {BASE_DATA_DIR}")
         return
 
     total_chunks = 0
