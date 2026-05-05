@@ -3,6 +3,7 @@ import os
 import streamlit as st
 from pypdf import PdfReader
 
+from pathlib import Path
 
 def ensure_vector_store_ready():
     vector_store_path = Path("rag/vector_store")
