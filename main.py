@@ -1,12 +1,5 @@
 from agents.workflow import build_graph
 
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-print(os.getenv("GOOGLE_API_KEY"))
-
 app = build_graph()
 
 initial_state = {
@@ -25,4 +18,5 @@ initial_state = {
 
 result = app.invoke(initial_state)
 
+print("PLAN:", result["plan"])
 print(result["final_response"])
