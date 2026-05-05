@@ -1,6 +1,7 @@
 import sys
 import os
 import streamlit as st
+from pypdf import PdfReader
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -26,15 +27,9 @@ st.markdown("""
 }
 
 @keyframes softGlow {
-    0% {
-        box-shadow: 0 0 18px rgba(100, 149, 237, 0.18);
-    }
-    50% {
-        box-shadow: 0 0 32px rgba(100, 149, 237, 0.35);
-    }
-    100% {
-        box-shadow: 0 0 18px rgba(100, 149, 237, 0.18);
-    }
+    0% { box-shadow: 0 0 18px rgba(100, 149, 237, 0.18); }
+    50% { box-shadow: 0 0 32px rgba(100, 149, 237, 0.35); }
+    100% { box-shadow: 0 0 18px rgba(100, 149, 237, 0.18); }
 }
 
 @keyframes gradientMove {
@@ -44,15 +39,9 @@ st.markdown("""
 }
 
 @keyframes glowPulse {
-    0% {
-        text-shadow: 0 0 10px rgba(100,149,237,0.3);
-    }
-    50% {
-        text-shadow: 0 0 25px rgba(100,149,237,0.7);
-    }
-    100% {
-        text-shadow: 0 0 10px rgba(100,149,237,0.3);
-    }
+    0% { text-shadow: 0 0 10px rgba(100,149,237,0.3); }
+    50% { text-shadow: 0 0 25px rgba(100,149,237,0.7); }
+    100% { text-shadow: 0 0 10px rgba(100,149,237,0.3); }
 }
 
 .stApp {
@@ -119,22 +108,6 @@ st.markdown("""
     -webkit-backdrop-filter: blur(16px);
     transition: all 0.30s ease;
     animation: fadeUp 0.7s ease both;
-}
-
-div[data-testid="column"]:nth-of-type(1) .metric-card {
-    animation-delay: 0.1s;
-}
-
-div[data-testid="column"]:nth-of-type(2) .metric-card {
-    animation-delay: 0.25s;
-}
-
-div[data-testid="column"]:nth-of-type(3) .metric-card {
-    animation-delay: 0.4s;
-}
-
-div[data-testid="column"]:nth-of-type(4) .metric-card {
-    animation-delay: 0.55s;
 }
 
 .metric-card:hover {
@@ -218,6 +191,18 @@ div[data-testid="column"]:nth-of-type(4) .metric-card {
     -webkit-backdrop-filter: blur(14px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.20);
     animation: fadeUp 0.7s ease both;
+}
+
+.role-title {
+    font-size: 22px;
+    font-weight: 850;
+    color: #F8FAFC;
+    margin-bottom: 8px;
+}
+
+.role-subtitle {
+    font-size: 14px;
+    color: #CBD5E1;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -326,6 +311,40 @@ hr {
 </style>
 """, unsafe_allow_html=True)
 
+
+def get_job_title(job):
+    if isinstance(job, dict):
+        return job.get("title", "Recommended Role")
+    return str(job)
+
+
+def read_cv_file(uploaded_file):
+    if uploaded_file is None:
+        return ""
+
+    file_name = uploaded_file.name.lower()
+
+    if file_name.endswith(".txt"):
+        try:
+            return uploaded_file.read().decode("utf-8")
+        except UnicodeDecodeError:
+            uploaded_file.seek(0)
+            return uploaded_file.read().decode("latin-1")
+
+    elif file_name.endswith(".pdf"):
+        reader = PdfReader(uploaded_file)
+        text = ""
+
+        for page in reader.pages:
+            page_text = page.extract_text()
+            if page_text:
+                text += page_text + "\n"
+
+        return text.strip()
+
+    return ""
+
+
 st.markdown('<div class="main-title">CareerPilot</div>', unsafe_allow_html=True)
 st.markdown(
     '<div class="subtitle">A Multi-Agent Career Guidance System with RAG and Safety Monitoring</div>',
@@ -337,7 +356,7 @@ st.divider()
 with st.sidebar:
     st.header("📥 Input Panel")
 
-    uploaded_cv = st.file_uploader("Upload your CV", type=["txt"])
+    uploaded_cv = st.file_uploader("Upload your CV", type=["txt", "pdf"])
 
     target_role = st.selectbox(
         "Target Role",
@@ -359,7 +378,7 @@ with st.sidebar:
 
 cv_text = ""
 if uploaded_cv:
-    cv_text = uploaded_cv.read().decode("utf-8")
+    cv_text = read_cv_file(uploaded_cv)
 
 st.markdown("### System Overview")
 
@@ -405,11 +424,14 @@ st.divider()
 
 if uploaded_cv:
     with st.expander("📄 CV Preview"):
-        st.write(cv_text[:1500])
+        if cv_text:
+            st.write(cv_text[:1500])
+        else:
+            st.warning("CV text could not be extracted. Please upload a readable TXT or text-based PDF file.")
 
 if run_button:
     if not cv_text:
-        st.error("Please upload a CV.")
+        st.error("Please upload a readable CV file. TXT or text-based PDF is supported.")
     elif not user_query.strip():
         st.error("Please enter a question.")
     else:
@@ -506,25 +528,26 @@ if run_button:
         )
 
         with tab1:
-            st.markdown('<div class="card">', unsafe_allow_html=True)
             st.subheader("Career Guidance Summary")
             st.write(result.get("final_response", "No response generated."))
-            st.markdown('</div>', unsafe_allow_html=True)
 
         with tab2:
-            st.markdown('<div class="card">', unsafe_allow_html=True)
             st.subheader("Recommended Roles / Internships")
 
             if jobs:
                 for i, job in enumerate(jobs, 1):
+                    role_title = get_job_title(job)
                     role_score = max(60, 90 - (i * 5))
+
                     st.markdown(f"""
                     <div class="step-box">
-                        <b>{i}. Recommended Role</b><br>
-                        {job}<br><br>
+                        <div class="role-title">💼 {role_title}</div>
+                        <div class="role-subtitle">Recommended internship option based on your CV</div>
+                        <br>
                         <b>Relevance Score:</b> {role_score}%
                     </div>
                     """, unsafe_allow_html=True)
+
                     st.progress(role_score)
             else:
                 st.warning("⚠ No strong matches found for this profile.")
@@ -535,10 +558,7 @@ Try selecting a different target role or improving your CV with more relevant sk
 </div>
 """, unsafe_allow_html=True)
 
-            st.markdown('</div>', unsafe_allow_html=True)
-
         with tab3:
-            st.markdown('<div class="card">', unsafe_allow_html=True)
             st.subheader("Skill Gap Analysis & Learning Roadmap")
 
             if gaps:
@@ -564,10 +584,7 @@ Your current profile appears aligned with the selected target role. You can stil
 </div>
 """, unsafe_allow_html=True)
 
-            st.markdown('</div>', unsafe_allow_html=True)
-
         with tab4:
-            st.markdown('<div class="card">', unsafe_allow_html=True)
             st.subheader("Interview Preparation")
 
             if questions:
@@ -587,20 +604,20 @@ Try selecting a target role with stronger job matches or adding more detailed sk
 </div>
 """, unsafe_allow_html=True)
 
-            st.markdown('</div>', unsafe_allow_html=True)
-
         with tab5:
-            st.markdown('<div class="card">', unsafe_allow_html=True)
             st.subheader("Safety Monitoring Result")
 
             normalized_status = str(safety_status).lower()
 
-            if normalized_status in ["safe", "passed", "ok", "clear"]:
+            if normalized_status in ["safe", "passed", "pass", "ok", "clear"]:
                 st.success("✔ Output passed safety checks.")
+                safety_message = "The generated recommendation passed the safety and reliability checks."
             elif normalized_status in ["unknown", "", "none"]:
-                st.info("Safety status is currently unknown. Raw safety report is shown below.")
+                st.info("Safety status is currently unknown.")
+                safety_message = "The safety status could not be determined clearly."
             else:
                 st.warning("⚠ Potential safety or reliability issues were detected.")
+                safety_message = "Potential safety or reliability issues were detected in the generated recommendation."
 
             st.markdown("""
             <div class="step-box">
@@ -609,10 +626,12 @@ Try selecting a target role with stronger job matches or adding more detailed sk
             </div>
             """, unsafe_allow_html=True)
 
-            with st.expander("View Raw Safety Report"):
-                st.json(safety_report)
-
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(f"""
+            <div class="step-box">
+                <b>Safety Report:</b><br>
+                {safety_message}
+            </div>
+            """, unsafe_allow_html=True)
 
 else:
     st.info("Upload CV → choose target role → write question → click Analyze My Profile 🚀")
@@ -626,7 +645,7 @@ else:
         <div class="how-card">
             <div class="icon">📄</div>
             <b>1. Upload CV</b><br>
-            <span class="small-text">Add your CV as a text file.</span>
+            <span class="small-text">Add your CV as a TXT or PDF file.</span>
         </div>
         """, unsafe_allow_html=True)
 
