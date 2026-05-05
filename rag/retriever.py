@@ -1,14 +1,18 @@
+from pathlib import Path
 import chromadb
 
 from rag.embeddings import embed_text
 
 
-DB_DIR = "rag/vector_store"
+ROOT_DIR = Path(__file__).resolve().parents[1]
+
+DB_DIR = ROOT_DIR / "rag" / "vector_store"
 COLLECTION_NAME = "career_knowledge"
 
 
-client = chromadb.PersistentClient(path=DB_DIR)
+client = chromadb.PersistentClient(path=str(DB_DIR))
 collection = client.get_or_create_collection(name=COLLECTION_NAME)
+
 
 
 def retrieve_documents(query: str, top_k: int = 5, category: str | None = None):
