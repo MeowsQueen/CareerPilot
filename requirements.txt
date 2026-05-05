@@ -14,7 +14,7 @@ pytest
 
 
 pydantic
-langgraph=
+langgraph
 langchain
 langchain-core
 langchain-google-genai
