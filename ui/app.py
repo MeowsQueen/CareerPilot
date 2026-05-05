@@ -11,12 +11,9 @@ from rag.ingest import ingest_documents
 
 
 def ensure_vector_store_ready():
-    vector_store_path = ROOT_DIR / "rag" / "vector_store"
-
-    if not vector_store_path.exists() or not any(vector_store_path.iterdir()):
-        print("Vector store not found. Running RAG ingestion...")
-        ingest_documents()
-        print("RAG ingestion completed.")
+    print("Running RAG ingestion...")
+    ingest_documents()
+    print("RAG ingestion completed.")
 
 
 ensure_vector_store_ready()
