@@ -3,7 +3,7 @@ import os
 import streamlit as st
 from pypdf import PdfReader
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(_file_), "..")))
 
 from agents.workflow import build_graph
 
@@ -550,7 +550,7 @@ if run_button:
 
                     st.progress(role_score)
             else:
-                st.warning("⚠ No strong matches found for this profile.")
+                st.warning("⚠️ No strong matches found for this profile.")
                 st.markdown("""
 <div class="step-box">
 <b>Suggestion:</b><br>
@@ -563,7 +563,7 @@ Try selecting a different target role or improving your CV with more relevant sk
 
             if gaps:
                 for skill in gaps:
-                    st.write(f"**{skill}**")
+                    st.write(f"*{skill}*")
                     st.progress(65)
 
                 st.markdown("#### Suggested Roadmap")
@@ -576,7 +576,7 @@ Try selecting a different target role or improving your CV with more relevant sk
                 </div>
                 """, unsafe_allow_html=True)
             else:
-                st.success("✔ No major skill gaps were detected.")
+                st.success("✔️ No major skill gaps were detected.")
                 st.markdown("""
 <div class="step-box">
 <b>Suggestion:</b><br>
@@ -596,7 +596,7 @@ Your current profile appears aligned with the selected target role. You can stil
                     </div>
                     """, unsafe_allow_html=True)
             else:
-                st.warning("⚠ No interview questions were generated.")
+                st.warning("⚠️ No interview questions were generated.")
                 st.markdown("""
 <div class="step-box">
 <b>Suggestion:</b><br>
@@ -610,13 +610,13 @@ Try selecting a target role with stronger job matches or adding more detailed sk
             normalized_status = str(safety_status).lower()
 
             if normalized_status in ["safe", "passed", "pass", "ok", "clear"]:
-                st.success("✔ Output passed safety checks.")
+                st.success("✔️ Output passed safety checks.")
                 safety_message = "The generated recommendation passed the safety and reliability checks."
             elif normalized_status in ["unknown", "", "none"]:
                 st.info("Safety status is currently unknown.")
                 safety_message = "The safety status could not be determined clearly."
             else:
-                st.warning("⚠ Potential safety or reliability issues were detected.")
+                st.warning("⚠️ Potential safety or reliability issues were detected.")
                 safety_message = "Potential safety or reliability issues were detected in the generated recommendation."
 
             st.markdown("""
