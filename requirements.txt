@@ -7,7 +7,6 @@ sentence-transformers
 numpy
 pandas
 
-streamlit
 pypdf
 pdfplumber
 pytest
