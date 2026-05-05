@@ -490,10 +490,10 @@ if run_button:
 
             result = app.invoke(initial_state)
             with st.expander("🔍 Debug Output"):
-            st.write("CV Profile:", result.get("cv_profile"))
-            st.write("Retrieved Jobs:", result.get("retrieved_jobs"))
-            st.write("Job Matches:", result.get("job_matches"))
-            st.write("Skill Gaps:", result.get("skill_gaps"))
+                st.write("CV Profile:", result.get("cv_profile"))
+                st.write("Retrieved Jobs:", result.get("retrieved_jobs"))
+                st.write("Job Matches:", result.get("job_matches"))
+                st.write("Skill Gaps:", result.get("skill_gaps"))
 
         progress.progress(100)
         status.success("Analysis completed successfully.")
