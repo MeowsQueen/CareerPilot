@@ -105,3 +105,24 @@ def response_completeness(output):
             completed += 1
 
     return round(completed / len(required_fields), 2)
+
+def intrinsic_quality_score(questions):
+    if not questions:
+        return 0.0
+
+    score = 0
+
+    # 1. Minimum length
+    if all(len(q.split()) > 5 for q in questions):
+        score += 0.3
+
+    # 2. Question format
+    if all("?" in q for q in questions):
+        score += 0.3
+
+    # 3. Diversity
+    unique_questions = len(set(questions))
+    diversity = unique_questions / len(questions)
+    score += 0.4 * diversity
+
+    return round(score, 2)
