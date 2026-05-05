@@ -1,9 +1,46 @@
+def _normalize_text_items(items, preferred_keys=None):
+    """
+    Converts mixed output formats into a clean list of lowercase strings.
+
+    Supported formats:
+    - ["Data Analyst Intern", "ML Intern"]
+    - [{"title": "Data Analyst Intern"}, {"skill": "SQL"}]
+    """
+
+    if preferred_keys is None:
+        preferred_keys = []
+
+    normalized_items = []
+
+    for item in items:
+        if isinstance(item, dict):
+            value = ""
+
+            for key in preferred_keys:
+                if item.get(key):
+                    value = item.get(key)
+                    break
+
+            if not value:
+                value = str(item)
+
+        else:
+            value = str(item)
+
+        value = value.lower().strip()
+
+        if value:
+            normalized_items.append(value)
+
+    return normalized_items
+
+
 def calculate_overlap_score(predicted_items, expected_items):
     if not expected_items:
         return 0.0
 
-    predicted_set = set(item.lower().strip() for item in predicted_items)
-    expected_set = set(item.lower().strip() for item in expected_items)
+    predicted_set = set(_normalize_text_items(predicted_items))
+    expected_set = set(_normalize_text_items(expected_items))
 
     matches = predicted_set.intersection(expected_set)
     return round(len(matches) / len(expected_set), 2)
@@ -11,26 +48,45 @@ def calculate_overlap_score(predicted_items, expected_items):
 
 def top_k_job_relevance(predicted_jobs, expected_jobs, k=3):
     top_jobs = predicted_jobs[:k]
-    return calculate_overlap_score(top_jobs, expected_jobs)
+
+    predicted_titles = _normalize_text_items(
+        top_jobs,
+        preferred_keys=["title", "job_title", "role"]
+    )
+
+    return calculate_overlap_score(predicted_titles, expected_jobs)
 
 
 def skill_gap_correctness(predicted_skills, expected_skills):
-    return calculate_overlap_score(predicted_skills, expected_skills)
+    predicted_skill_names = _normalize_text_items(
+        predicted_skills,
+        preferred_keys=["skill", "name", "title"]
+    )
+
+    return calculate_overlap_score(predicted_skill_names, expected_skills)
 
 
 def interview_question_relevance(questions, target_role):
     if not questions:
         return 0.0
 
+    normalized_questions = _normalize_text_items(
+        questions,
+        preferred_keys=["question", "text"]
+    )
+
+    if not normalized_questions:
+        return 0.0
+
     target_words = set(target_role.lower().split())
     relevant_count = 0
 
-    for question in questions:
-        question_words = set(question.lower().split())
+    for question in normalized_questions:
+        question_words = set(question.split())
         if target_words.intersection(question_words):
             relevant_count += 1
 
-    return round(relevant_count / len(questions), 2)
+    return round(relevant_count / len(normalized_questions), 2)
 
 
 def response_completeness(output):
@@ -49,4 +105,3 @@ def response_completeness(output):
             completed += 1
 
     return round(completed / len(required_fields), 2)
-   
