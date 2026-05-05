@@ -1,12 +1,14 @@
-import os
+from pathlib import Path
 import chromadb
 
 from rag.embeddings import embed_text
 from rag.chunking import chunk_text
 
 
-BASE_DATA_DIR = "rag/data"
-DB_DIR = "rag/vector_store"
+ROOT_DIR = Path(__file__).resolve().parents[1]
+
+BASE_DATA_DIR = ROOT_DIR / "rag" / "data"
+DB_DIR = ROOT_DIR / "rag" / "vector_store"
 COLLECTION_NAME = "career_knowledge"
 
 
