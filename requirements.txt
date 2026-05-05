@@ -13,8 +13,8 @@ pdfplumber
 pytest
 
 
-pydantic==2.7.4
-langgraph==0.2.34
-langchain==0.2.16
-langchain-core==0.2.38
-langchain-google-genai==1.0.10
+pydantic
+langgraph=
+langchain
+langchain-core
+langchain-google-genai
