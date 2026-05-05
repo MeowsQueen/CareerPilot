@@ -10,12 +10,14 @@ DB_DIR = ROOT_DIR / "rag" / "vector_store"
 COLLECTION_NAME = "career_knowledge"
 
 
-client = chromadb.PersistentClient(path=str(DB_DIR))
-collection = client.get_collection(name=COLLECTION_NAME)
-
+def get_collection():
+    client = chromadb.PersistentClient(path=str(DB_DIR))
+    return client.get_collection(name=COLLECTION_NAME)
 
 
 def retrieve_documents(query: str, top_k: int = 5, category: str | None = None):
+    collection = get_collection()
+
     query_embedding = embed_text(query)
 
     where_filter = {"category": category} if category else None
