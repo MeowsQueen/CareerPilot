@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from evaluation.metrics import intrinsic_quality_score
 
 from evaluation.metrics import (
     top_k_job_relevance,
@@ -37,6 +38,9 @@ def evaluate_single_output(agent_output, expected_profile):
             expected_profile.get("target_role", ""),
         ),
         "response_completeness": response_completeness(agent_output),
+        "intrinsic_quality_score": intrinsic_quality_score(
+            agent_output.get("interview_questions", [])
+        ),
     }
 
 
@@ -49,6 +53,7 @@ def calculate_average_scores(results):
         "skill_gap_score",
         "interview_question_score",
         "response_completeness",
+        "intrinsic_quality_score",
     ]
 
     averages = {}
