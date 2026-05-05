@@ -8,7 +8,6 @@ import streamlit as st
 from pypdf import PdfReader
 
 from rag.ingest import ingest_documents
-from agents.workflow import build_graph
 
 
 def ensure_vector_store_ready():
@@ -21,6 +20,9 @@ def ensure_vector_store_ready():
 
 
 ensure_vector_store_ready()
+
+# IMPORTANT: build_graph import must come AFTER ingestion check
+from agents.workflow import build_graph
 
 app = build_graph()
 
