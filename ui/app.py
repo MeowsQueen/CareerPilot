@@ -4,6 +4,8 @@ import streamlit as st
 from pypdf import PdfReader
 
 from pathlib import Path
+from rag.ingest import ingest_documents
+from agents.workflow import build_graph
 
 def ensure_vector_store_ready():
     vector_store_path = Path("rag/vector_store")
