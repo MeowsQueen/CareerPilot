@@ -3,7 +3,7 @@ import os
 import streamlit as st
 from pypdf import PdfReader
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(_file_), "..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from agents.workflow import build_graph
 
