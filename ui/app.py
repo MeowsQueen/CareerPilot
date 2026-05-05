@@ -1,14 +1,18 @@
 import sys
-import os
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+sys.path.append(str(ROOT_DIR))
+
 import streamlit as st
 from pypdf import PdfReader
 
-from pathlib import Path
 from rag.ingest import ingest_documents
 from agents.workflow import build_graph
 
+
 def ensure_vector_store_ready():
-    vector_store_path = Path("rag/vector_store")
+    vector_store_path = ROOT_DIR / "rag" / "vector_store"
 
     if not vector_store_path.exists() or not any(vector_store_path.iterdir()):
         print("Vector store not found. Running RAG ingestion...")
@@ -19,10 +23,6 @@ def ensure_vector_store_ready():
 ensure_vector_store_ready()
 
 app = build_graph()
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from agents.workflow import build_graph
 
 st.set_page_config(
     page_title="CareerPilot",
