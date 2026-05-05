@@ -52,9 +52,8 @@ career-pilot/
 │
 ├── utils/
 │   ├── __init__.py
-│   ├── cv_parser.py
-│   ├── prompts.py
-│   └── helpers.py
+│   └── prompts.py
+│   
 │
 ├── config/
 │   ├── __init__.py
