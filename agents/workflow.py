@@ -10,6 +10,24 @@ from rag.retriever import retrieve_documents
 
 from agents.safety import safety_monitor_node
 
+# helper function 
+def extract_job_title(content: str) -> str:
+    lines = content.splitlines()
+
+    for line in lines:
+        lower_line = line.lower()
+
+        if "title:" in lower_line:
+            return line.split(":", 1)[1].strip()
+
+        if "job title:" in lower_line:
+            return line.split(":", 1)[1].strip()
+
+        if "role:" in lower_line:
+            return line.split(":", 1)[1].strip()
+
+    return "Unknown Job"
+
 class CareerPilotState(TypedDict):
     user_query: str
     cv_text: str
@@ -65,7 +83,7 @@ Rules:
 - If CV text is provided, include cv_analyzer.
 - If the user asks for job or internship recommendations, include rag_retriever and job_matcher.
 - If a target role is provided, include skill_gap.
-- If the user needs preparation for a role, include interview_coach.
+- If the user asks for job or internship recommendations, include interview_coach after skill_gap because the system should provide preparation material for the recommended role.
 - Do not include explanations outside JSON.
 """
 
@@ -105,11 +123,31 @@ Rules:
     return state
 
 def cv_analyzer_node(state: CareerPilotState) -> CareerPilotState:
+    cv_text = state.get("cv_text", "")
+
+    known_skills = [
+        "python", "sql", "excel", "power bi", "tableau",
+        "machine learning", "deep learning", "pandas", "numpy",
+        "scikit-learn", "tensorflow", "pytorch",
+        "html", "css", "javascript", "react", "node.js",
+        "java", "c++", "git", "github", "fastapi", "django",
+        "data visualization", "statistics", "nlp", "rag", "llm"
+    ]
+
+    extracted_skills = []
+
+    lower_cv = cv_text.lower()
+
+    for skill in known_skills:
+        if skill in lower_cv:
+            extracted_skills.append(skill.title())
+
     state["cv_profile"] = {
-        "skills": ["Python", "SQL", "Machine Learning"],
-        "education": "Computer Engineering student",
+        "skills": extracted_skills,
+        "education": "Extracted from CV text",
         "experience_level": "Internship"
     }
+
     return state
 
 
@@ -145,23 +183,64 @@ def extract_title(content: str) -> str:
 
 def job_matcher_node(state: CareerPilotState) -> CareerPilotState:
     retrieved_jobs = state.get("retrieved_jobs", [])
+    cv_skills = [
+        skill.lower()
+        for skill in state.get("cv_profile", {}).get("skills", [])
+    ]
 
     job_matches = []
 
     for job in retrieved_jobs:
-        title = extract_title(job["content"])
+        job_id = job.get("id")
+        content = job.get("content", "")
+
+        title = job.get("title", "Unknown Job")
+
+        if title == "Unknown Job":
+            title = extract_job_title(content)
+
+        required_skills = job.get("required_skills", [])
+
+        if not required_skills:
+            required_skills = extract_required_skills(content)
+
+        required_skills_lower = [
+            skill.lower()
+            for skill in required_skills
+        ]
+
+        matched_skills = [
+            skill
+            for skill in required_skills_lower
+            if skill in cv_skills
+        ]
+
+        score = (
+            len(matched_skills) / len(required_skills_lower)
+            if required_skills_lower
+            else 0
+        )
 
         job_matches.append({
             "title": title,
+            "source": job_id,
+            "required_skills": required_skills,
+            "matched_skills": matched_skills,
+            "match_score": round(score, 2),
             "match_reason": (
-                f"This role was retrieved from the RAG knowledge base "
-                f"based on the user's CV and target role: {state['target_role']}."
-            ),
-            "retrieval_score": job["score"],
-            "source": job["id"]
+                f"Matched skills: {', '.join(matched_skills)}"
+                if matched_skills
+                else "No direct skill match found."
+            )
         })
 
-    state["job_matches"] = job_matches
+    job_matches = sorted(
+        job_matches,
+        key=lambda x: x["match_score"],
+        reverse=True
+    )
+
+    state["job_matches"] = job_matches[:3]
 
     return state
 
