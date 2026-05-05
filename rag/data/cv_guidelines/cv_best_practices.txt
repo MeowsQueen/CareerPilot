@@ -1,0 +1,29 @@
+Title: CV Best Practices for Students
+
+Purpose:
+This guide explains how university students should structure their CVs for internships and junior roles.
+
+Recommended Sections:
+- Contact Information
+- Education
+- Technical Skills
+- Projects
+- Internship or Work Experience
+- Certifications
+- Languages
+- Extracurricular Activities
+
+Best Practices:
+- Keep the CV clear, concise, and easy to scan.
+- Use bullet points instead of long paragraphs.
+- Start bullet points with action verbs such as developed, designed, analyzed, implemented, or improved.
+- Highlight measurable achievements when possible.
+- Put the most relevant skills and projects near the top.
+- Tailor the CV to the target role.
+- Avoid unsupported claims such as expert, perfect, or guaranteed success.
+- Do not include sensitive personal information such as gender, religion, marital status, or national ID.
+
+For Computer Engineering Students:
+- Emphasize programming languages, frameworks, databases, and tools.
+- Include GitHub, portfolio, or project links if available.
+- Describe projects with technologies used, problem solved, and outcome.

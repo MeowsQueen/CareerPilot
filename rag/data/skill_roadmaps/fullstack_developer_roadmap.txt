@@ -1,0 +1,20 @@
+Role: Fullstack Developer
+
+Core Skills:
+- JavaScript
+- Frontend + Backend
+
+Tools:
+- React
+- Node.js
+
+Learning Path:
+1. Learn HTML/CSS/JS
+2. Learn frontend framework
+3. Learn backend development
+4. Build fullstack apps
+5. Deploy projects
+
+Advanced Topics:
+- DevOps
+- Microservices

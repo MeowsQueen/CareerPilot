@@ -1,0 +1,15 @@
+Title: Fullstack Developer Intern
+
+Description:
+We are hiring a Fullstack Developer Intern to work on both frontend and backend systems.
+
+Responsibilities:
+- Develop web applications
+- Integrate APIs
+- Work across frontend and backend
+
+Required Skills:
+JavaScript, React, Node.js, REST APIs
+
+Nice to Have:
+MongoDB, Docker, TypeScript

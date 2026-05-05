@@ -1,0 +1,21 @@
+Role: Software Engineer
+
+Core Skills:
+- Programming (Python/Java)
+- Data Structures
+- Algorithms
+
+Tools:
+- Git
+- IDEs
+
+Learning Path:
+1. Learn a programming language
+2. Study data structures and algorithms
+3. Build projects
+4. Learn debugging and testing
+5. Practice coding problems
+
+Advanced Topics:
+- System Design
+- Distributed Systems

@@ -1,0 +1,23 @@
+Role: Machine Learning Engineer
+
+Core Skills:
+- Python
+- Machine Learning Algorithms
+- Data Preprocessing
+
+Tools:
+- Scikit-learn
+- Pandas
+- NumPy
+
+Learning Path:
+1. Learn Python deeply
+2. Study supervised and unsupervised learning
+3. Practice with datasets (Kaggle)
+4. Learn model evaluation techniques
+5. Build ML projects
+
+Advanced Topics:
+- Deep Learning
+- NLP
+- TensorFlow / PyTorch

@@ -26,6 +26,9 @@ career-pilot/
 │   │   └── skill_roadmaps/
 │   └── vector_store/
 │
+├── scripts/
+│   └── demo_cases.py
+│
 ├── monitoring/
 │   ├── __init__.py
 │   ├── safety_rules.py
@@ -59,6 +62,8 @@ career-pilot/
 │
 ├── docs/
 │   ├── report/
+│   │   └── rag_section.md
+│   │   └── safety_section.md
 │   ├── screenshots/
 │   └── demo_notes.md
 │
@@ -69,7 +74,74 @@ career-pilot/
 │
 ├── main.py
 ├── requirements.txt
+├── requirements-dev.txt
 ├── README.md
 ├── .env.example
 └── .gitignore
 ```
+
+## RAG Setup and Usage
+
+The RAG module uses ChromaDB as a local vector database and SentenceTransformers for embeddings.
+
+### 1. Install dependencies
+
+```bash
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+```
+
+### 2. Ingest knowledge base documents
+
+Before running the system, build the local vector database:
+
+```bash
+python -m rag.ingest
+```
+
+This reads documents from:
+
+```text
+rag/data/job_descriptions/
+rag/data/cv_guidelines/
+rag/data/skill_roadmaps/
+```
+
+and stores embeddings in:
+
+```text
+rag/vector_store/
+```
+
+### 3. Run the system
+
+```bash
+python main.py
+```
+
+### 4. Run demo cases
+```bash
+python scripts/demo_cases.py
+```
+
+### 5. Run RAG tests
+
+```bash
+pytest tests/test_rag.py
+```
+
+Expected result:
+
+```text
+2 passed
+```
+
+### Note
+
+`rag/vector_store/` is ignored by Git. Each developer should generate it locally by running:
+
+```bash
+python -m rag.ingest
+```
+
+ChromaDB distance scores are used for retrieval ranking. Lower distance means higher relevance.

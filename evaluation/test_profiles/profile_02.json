@@ -1,0 +1,15 @@
+{
+  "profile_id": "profile_02",
+  "student_background": "Computer Engineering student with Python, machine learning, and deep learning project experience. Worked on image classification and model evaluation.",
+  "target_role": "Machine Learning Intern",
+  "expected_jobs": [
+    "Machine Learning Intern",
+    "AI Intern",
+    "Junior ML Engineer"
+  ],
+  "expected_skill_gaps": [
+    "Model Deployment",
+    "MLOps",
+    "Cloud Platforms"
+  ]
+}

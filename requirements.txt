@@ -1,0 +1,9 @@
+langgraph
+google-generativeai
+python-dotenv
+
+chromadb
+sentence-transformers
+
+numpy
+pandas

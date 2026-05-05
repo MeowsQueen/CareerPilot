@@ -1,0 +1,24 @@
+Role: Data Analyst
+
+Core Skills:
+- Python
+- SQL
+- Excel
+- Data Visualization
+
+Tools:
+- Pandas
+- NumPy
+- Power BI / Tableau
+
+Learning Path:
+1. Learn Python basics and data manipulation (Pandas)
+2. Practice SQL queries and joins
+3. Work with Excel for analysis
+4. Learn data visualization tools
+5. Build projects using real datasets
+
+Advanced Topics:
+- Statistics
+- A/B Testing
+- Business Analytics

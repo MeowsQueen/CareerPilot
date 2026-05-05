@@ -1,0 +1,15 @@
+Title: Software Engineer Intern
+
+Description:
+We are looking for a Software Engineer Intern to assist in developing scalable applications.
+
+Responsibilities:
+- Write clean and maintainable code
+- Debug and fix issues
+- Collaborate with cross-functional teams
+
+Required Skills:
+Python, Java, Data Structures, Algorithms
+
+Nice to Have:
+System Design, Git, Docker

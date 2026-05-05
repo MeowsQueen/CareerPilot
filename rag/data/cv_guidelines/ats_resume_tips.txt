@@ -1,0 +1,23 @@
+Title: ATS-Friendly Resume Tips
+
+Purpose:
+This guide explains how to make a CV easier to parse by Applicant Tracking Systems.
+
+ATS Tips:
+- Use a simple and clean layout.
+- Avoid complex tables, text boxes, images, icons, and unusual formatting.
+- Use standard section headings such as Education, Skills, Projects, Experience, and Certifications.
+- Include keywords from the job description naturally.
+- Use common file formats such as PDF or DOCX.
+- Write skills explicitly instead of only mentioning them inside paragraphs.
+- Keep job titles and role names clear.
+- Avoid spelling mistakes in technical keywords.
+
+Good Example:
+Skills: Python, SQL, Pandas, Machine Learning, Git
+
+Weak Example:
+I have used many modern technologies in different projects.
+
+Why It Matters:
+ATS systems may rank CVs based on keyword relevance. A clear CV with role-specific keywords can improve matching quality.
