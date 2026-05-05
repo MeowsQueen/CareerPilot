@@ -3,6 +3,20 @@ import os
 import streamlit as st
 from pypdf import PdfReader
 
+
+def ensure_vector_store_ready():
+    vector_store_path = Path("rag/vector_store")
+
+    if not vector_store_path.exists() or not any(vector_store_path.iterdir()):
+        print("Vector store not found. Running RAG ingestion...")
+        ingest_documents()
+        print("RAG ingestion completed.")
+
+
+ensure_vector_store_ready()
+
+app = build_graph()
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from agents.workflow import build_graph
