@@ -12,7 +12,8 @@ career-pilot/
 │   ├── job_matcher.py
 │   ├── skill_gap.py
 │   ├── interview.py
-│   └── safety.py
+│   ├── safety.py
+│   └── workflow.py
 │
 ├── rag/
 │   ├── __init__.py
@@ -75,7 +76,6 @@ career-pilot/
 ├── requirements.txt
 ├── requirements-dev.txt
 ├── README.md
-├── .env.example
 └── .gitignore
 ```
 
