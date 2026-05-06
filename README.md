@@ -346,13 +346,13 @@ The safety module produces a `PASS` or `FAIL` status before the final response i
 
 ## Authors and Responsibilities
 
-| Team Member | Responsibility |
-|---|---|
-| Süreyya YILDIRIM | Architecture & Planner |
-| Beyza Nur YAZICI | RAG |
-| Hacer Dilara KIVRAK | UI |
-| Zehra Betül ŞİT | Safety & Monitoring |
-| Ahsen DURSUN | Evaluation & Metrics |
+| Student ID | Student Name | Team Role | Responsibilities |
+|---|---|---|---|
+| 210901037 | Süreyya YILDIRIM | Project Manager & Agent System Developer | Responsible for designing the multi-agent workflow, including the planner logic and execution order of agents. |
+| 210901038 | Beyza Nur YAZICI | RAG Developer | Implemented the Retrieval-Augmented Generation module, including knowledge base construction, document ingestion, embedding generation, and ChromaDB-based retrieval. |
+| 220901541 | Zehra Betül ŞİT | Safety & Monitoring Engineer | Developed safety rules and monitoring components to ensure reliable and controlled system outputs. |
+| 220901599 | Ahsen DURSUN | Evaluation & Metrics Lead | Designed the evaluation pipeline, including extrinsic and intrinsic metrics, and conducted performance analysis across test profiles. |
+| 210901049 | Hacer Dilara KIVRAK | UI/UX Developer | Built the user interface using Streamlit, enabling CV upload, role selection, and visualization of system outputs. |
 
 ---
 
@@ -360,4 +360,3 @@ The safety module produces a `PASS` or `FAIL` status before the final response i
 
 CareerPilot is a multi-agent career mentorship system that analyzes student CVs, retrieves relevant job knowledge from a vector database, recommends suitable opportunities, identifies skill gaps, generates interview questions, and monitors outputs for safety and reliability.
 
-:contentReference[oaicite:0]{index=0}
