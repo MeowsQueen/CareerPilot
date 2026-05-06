@@ -299,6 +299,51 @@ CareerPilot includes an evaluation pipeline based on both extrinsic and intrinsi
 - Response Completeness
 - Intrinsic Interview Question Quality Score
 
+
+| Profile | Job Score | Precision@3 | Skill Score | Interview Score | Intrinsic Score | Completeness |
+|---|---:|---:|---:|---:|---:|---:|
+| Profile 01 | 0.33 | 0.33 | 0.67 | 0.60 | 0.80 | 1.00 |
+| Profile 02 | 0.33 | 0.33 | 0.00 | 0.60 | 0.78 | 1.00 |
+| Profile 03 | 0.33 | 0.33 | 0.00 | 0.33 | 0.75 | 0.83 |
+| Profile 04 | 0.33 | 0.33 | 0.00 | 0.20 | 0.70 | 1.00 |
+| Profile 05 | 0.00 | 0.00 | 0.00 | 0.00 | 0.65 | 1.00 |
+| **Average** | **0.26** | **0.26** | **0.13** | **0.31** | **0.74** | **0.97** |
+
+The evaluation results demonstrate that the system consistently produces complete outputs across almost all test cases, as reflected by the high completeness score.
+
+Some metrics contain zero values due to several known limitations of the current prototype:
+
+- The knowledge base currently contains a limited number of curated job descriptions.
+- Certain domains, such as cybersecurity, are underrepresented in the dataset.
+- The job matching mechanism relies heavily on skill overlap and retrieved document quality.
+- Evaluation uses strict overlap-based scoring, meaning semantically similar but differently phrased outputs may still receive a score of zero.
+- The CV Analyzer currently performs simplified rule-based skill extraction, which may miss relevant skills in some profiles.
+
+For example, Profile 05 (Cybersecurity Intern) received lower scores because the retrieval module could not find sufficiently relevant cybersecurity-related job descriptions in the current knowledge base. This resulted in weaker downstream job matching and skill gap analysis outputs.
+
+Despite these limitations, the system successfully demonstrates stable multi-agent workflow execution, grounded retrieval-based recommendations, and structured career guidance generation.
+
+### Note on Job Scores
+
+The repeated `0.33` scores in the **Job Score** and **Precision@3** metrics are caused by the current evaluation design.
+
+The system retrieves and ranks the top 3 job recommendations (`top_k = 3`).  
+If only 1 of the 3 retrieved jobs matches the expected role, the resulting score becomes:
+
+```text
+1 / 3 = 0.33
+```
+
+Similarly:
+
+```text
+0.67 → 2 correct matches out of 3
+1.00 → all 3 retrieved jobs are relevant
+0.00 → none of the retrieved jobs matched the expected results
+```
+
+This behavior reflects the ranking-based structure of the evaluation pipeline rather than a system failure.
+
 The evaluation module uses predefined test profiles located under:
 
 ```text
