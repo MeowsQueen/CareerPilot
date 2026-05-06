@@ -11,7 +11,6 @@ The system combines:
 - Safety monitoring
 - Evaluation metrics
 - Streamlit-based user interface
-
 ---
 
 ## Live Demo
@@ -19,6 +18,11 @@ The system combines:
 🌐 Live Demo: https://careerpilot-a-multi-agent-career-mentor.streamlit.app/  
 🎥 Demo Video: https://www.youtube.com/watch?v=TMf7xOI8Ups
 
+### Chatbot Interface Overview
+![Chatbot Interface Overview](assets/chatbot_interface_overview.png)
+
+### Evaluation & Retrieval Panel
+![Evaluation Panel](assets/chatbot_interface_evaluation_panel.png)
 ---
 
 ## Features
