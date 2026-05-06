@@ -85,6 +85,9 @@ Final Career Guidance Output
 ```text
 career-pilot/
 │
+├── .devcontainer/
+│   └── devcontainer.json
+│
 ├── agents/
 │   ├── __init__.py
 │   ├── planner.py
