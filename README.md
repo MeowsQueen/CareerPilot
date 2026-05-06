@@ -20,11 +20,13 @@ The system combines:
 
 ### CareerPilot Main Dashboard
 
-![CareerPilot Main Dashboard](docs/screenshots/CareerPilot Main Dashboard.png)
+![CareerPilot Main Dashboard](./docs/screenshots/CareerPilot%20Main%20Dashboard.png)
+
+---
 
 ### CareerPilot Analysis Results Interface
 
-![CareerPilot Analysis Results Interface](docs/screenshots/CareerPilot Analysis Results Interface.png)
+![CareerPilot Analysis Results Interface](./docs/screenshots/CareerPilot%20Analysis%20Results%20Interface.png)
 ---
 
 ## Features
