@@ -18,11 +18,13 @@ The system combines:
 🌐 Live Demo: https://careerpilot-a-multi-agent-career-mentor.streamlit.app/  
 🎥 Demo Video: https://www.youtube.com/watch?v=TMf7xOI8Ups
 
-### Chatbot Interface Overview
-![Chatbot Interface Overview](assets/chatbot_interface_overview.png)
+### CareerPilot Main Dashboard
 
-### Evaluation & Retrieval Panel
-![Evaluation Panel](assets/chatbot_interface_evaluation_panel.png)
+![CareerPilot Main Dashboard](docs/screenshots/CareerPilot Main Dashboard.png)
+
+### CareerPilot Analysis Results Interface
+
+![CareerPilot Analysis Results Interface](docs/screenshots/CareerPilot Analysis Results Interface.png)
 ---
 
 ## Features
